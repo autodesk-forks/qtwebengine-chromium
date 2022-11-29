@@ -300,8 +300,7 @@ bool GetSystemMemoryInfo(SystemMemoryInfoKB* meminfo) {
   // PAGE_SIZE is vm_page_size on arm, which isn't constexpr.
   DCHECK_EQ(PAGE_SIZE % 1024, 0u) << "Invalid page size";
 #else
-  //static_assert(PAGE_SIZE % 1024 == 0, "Invalid page size");
-  DCHECK_EQ(PAGE_SIZE % 1024, 0u) << "Invalid page size";
+  static_assert(PAGE_SIZE % 1024 == 0, "Invalid page size");
 #endif
   meminfo->free = saturated_cast<int>(
       PAGE_SIZE / 1024 * (vm_info.free_count - vm_info.speculative_count));
