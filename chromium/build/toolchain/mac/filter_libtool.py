@@ -39,7 +39,6 @@ def ShouldSuppressLine(line):
 
 
 def Main(cmd_list):
-  print(cmd_list)
   env = os.environ.copy()
   # Ref:
   # http://www.opensource.apple.com/source/cctools/cctools-809/misc/libtool.c
