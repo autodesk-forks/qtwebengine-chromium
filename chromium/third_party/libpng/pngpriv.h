@@ -524,7 +524,11 @@
     * <fp.h> if possible.
     */
 #    if !defined(__MATH_H__) && !defined(__MATH_H) && !defined(__cmath__)
-#      include <fp.h>
+#      if __has_include(<fp.h>)
+#        include <fp.h>
+#      else
+#        include <math.h>
+#      endif
 #    endif
 #  else
 #    include <math.h>
