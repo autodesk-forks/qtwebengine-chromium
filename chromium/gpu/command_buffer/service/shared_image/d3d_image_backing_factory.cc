@@ -374,6 +374,13 @@ std::unique_ptr<SharedImageBacking> D3DImageBackingFactory::CreateSharedImage(
                      (gfx::D3DSharedFence::IsSupported(d3d11_device_.Get())
                           ? D3D11_RESOURCE_MISC_SHARED
                           : D3D11_RESOURCE_MISC_SHARED_KEYEDMUTEX);
+#if BUILDFLAG(IS_QTWEBENGINE)
+    // Qt webengine will use keyed mutex to synchronize between d3d11 devices.
+    if (debug_label == "QWE_SharedImageBuffer") {
+      desc.MiscFlags = D3D11_RESOURCE_MISC_SHARED_NTHANDLE |
+                       D3D11_RESOURCE_MISC_SHARED_KEYEDMUTEX;
+    }
+#endif
   } else if (is_shm_gmb && format.is_single_plane() &&
              !format.IsLegacyMultiplanar() && UseMapOnDefaultTextures()) {
     desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
